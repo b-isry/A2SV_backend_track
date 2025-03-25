@@ -1,0 +1,464 @@
+{
+	"info": {
+		"_postman_id": "a590cfb7-e663-462e-8d70-5f1ceef8273d",
+		"name": "Task Manager API",
+		"description": "## Overview\n\nThis API provides endpoints to manage tasks in a task management system. It supports basic CRUD operations (Create, Read, Update, Delete) for tasks.\n\n## Base URL\n\n```\nhttp://localhost:8080\n\n ```\n\n## Response Format\n\nAll endpoints return responses in the following JSON format:\n\n``` json\n{\n\"message\": \"Description of what happened\",\n\"data\": {\n// Optional data object\n}\n}\n\n ```\n\n## Endpoints\n\n### Health Check\n\n#### GET /ping\n\nCheck if the API is running.\n\n**Response**\n\n``` json\n{\n\"message\": \"pong\"\n}\n\n ```\n\n### Tasks\n\n#### GET /tasks\n\nRetrieve all tasks.\n\n**Response**\n\n``` json\n{\n\"message\": \"Tasks retrieved successfully\",\n\"data\": [\n{\n\"id\": \"1\",\n\"title\": \"Task 1\",\n\"description\": \"First task\",\n\"due_date\": \"2024-03-10T12:00:00Z\",\n\"status\": \"pending\"\n}\n]\n}\n\n ```\n\n#### GET /tasks/:id\n\nRetrieve a specific task by ID.\n\n**Parameters**\n\n- `id`: Task ID (string, in path)\n    \n\n**Success Response**\n\n``` json\n{\n\"message\": \"Task retrieved successfully\",\n\"data\": {\n\"id\": \"1\",\n\"title\": \"Task 1\",\n\"description\": \"First task\",\n\"due_date\": \"2024-03-10T12:00:00Z\",\n\"status\": \"pending\"\n}\n}\n\n ```\n\n**Error Response**\n\n``` json\n{\n\"message\": \"Task not found\"\n}\n\n ```\n\n#### POST /tasks\n\nCreate a new task.\n\n**Request Body**\n\n``` json\n{\n\"id\": \"4\",\n\"title\": \"New Task\",\n\"description\": \"Task description\",\n\"due_date\": \"2024-03-15T12:00:00Z\",\n\"status\": \"pending\"\n}\n\n ```\n\n**Success Response**\n\n``` json\n{\n\"message\": \"Task created successfully\",\n\"data\": {\n\"id\": \"4\",\n\"title\": \"New Task\",\n\"description\": \"Task description\",\n\"due_date\": \"2024-03-15T12:00:00Z\",\n\"status\": \"pending\"\n}\n}\n\n ```\n\n**Validation Error Response**\n\n``` json\n{\n\"message\": \"Validation failed\",\n\"data\": [\n{\n\"field\": \"title\",\n\"message\": \"Title is required\"\n}\n]\n}\n\n ```\n\n#### PUT /tasks/:id\n\nUpdate an existing task.\n\n**Parameters**\n\n- `id`: Task ID (string, in path)\n    \n\n**Request Body**\n\n``` json\n{\n\"title\": \"Updated Task\",\n\"description\": \"Updated description\",\n\"status\": \"in_progress\"\n}\n\n ```\n\n**Success Response**\n\n``` json\n{\n\"message\": \"Task updated successfully\"\n}\n\n ```\n\n**Error Responses**\n\n``` json\n{\n\"message\": \"Task not found\"\n}\n\n ```\n\n``` json\n{\n\"message\": \"Validation failed\",\n\"data\": [\n{\n\"field\": \"status\",\n\"message\": \"Status must be one of: pending, in_progress, completed\"\n}\n]\n}\n\n ```\n\n#### DELETE /tasks/:id\n\nDelete a task.\n\n**Parameters**\n\n- `id`: Task ID (string, in path)\n    \n\n**Success Response**\n\n``` json\n{\n\"message\": \"Task deleted successfully\"\n}\n\n ```\n\n**Error Response**\n\n``` json\n{\n\"message\": \"Task not found\"\n}\n\n ```\n\n## Status Codes\n\n- `200 OK`: Request successful\n    \n- `201 Created`: Resource created successfully\n    \n- `400 Bad Request`: Invalid request (validation error)\n    \n- `404 Not Found`: Resource not found\n    \n- `500 Internal Server Error`: Server error\n    \n\n## Task Status Values\n\n- `pending`: Task is pending\n    \n- `in_progress`: Task is in progress\n    \n- `completed`: Task is completed",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "39753117"
+	},
+	"item": [
+		{
+			"name": "Get Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": [
+				{
+					"name": "Get Tasks",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Mar 2025 06:39:01 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "421"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Tasks retrieved successfully\",\n    \"data\": [\n        {\n            \"id\": \"1\",\n            \"title\": \"Task 1\",\n            \"description\": \"First task\",\n            \"due_date\": \"2025-03-24T09:38:38.9557866+03:00\",\n            \"status\": \"Pending\"\n        },\n        {\n            \"id\": \"2\",\n            \"title\": \"Task 2\",\n            \"description\": \"Second task\",\n            \"due_date\": \"2025-03-25T09:38:38.9557866+03:00\",\n            \"status\": \"In Progress\"\n        },\n        {\n            \"id\": \"3\",\n            \"title\": \"Task 3\",\n            \"description\": \"Third task\",\n            \"due_date\": \"2025-03-26T09:38:38.9577741+03:00\",\n            \"status\": \"Completed\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Task By ID",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"1"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": [
+				{
+					"name": "Get Task By ID",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/tasks/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Mar 2025 06:40:38 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "169"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Task retrieved successfully\",\n    \"data\": {\n        \"id\": \"1\",\n        \"title\": \"Task 1\",\n        \"description\": \"First task\",\n        \"due_date\": \"2025-03-24T09:38:38.9557866+03:00\",\n        \"status\": \"Pending\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Create Task",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"4\",\n            \"title\": \"New Task\",    \n            \"description\": \"Task description\",    \n            \"due_date\": \"2024-03-15T12:00:00Z\",    \n            \"status\": \"pending\"\n            \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasks",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": [
+				{
+					"name": "Create Task",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"4\",\n            \"title\": \"New Task\",    \n            \"description\": \"Task description\",    \n            \"due_date\": \"2024-03-15T12:00:00Z\",    \n            \"status\": \"pending\"\n            \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasks",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks"
+							]
+						}
+					},
+					"status": "Created",
+					"code": 201,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Mar 2025 06:41:05 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "162"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Task created successfully\",\n    \"data\": {\n        \"id\": \"4\",\n        \"title\": \"New Task\",\n        \"description\": \"Task description\",\n        \"due_date\": \"2024-03-15T12:00:00Z\",\n        \"status\": \"pending\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "Update tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"3\",\n            \"title\": \"Updated Task\",    \n            \"description\": \"Task description\",    \n            \"due_date\": \"2024-03-15T12:00:00Z\",    \n            \"status\": \"pending\"\n            \n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"1"
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": [
+				{
+					"name": "Update tasks",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n        \"id\": \"3\",\n            \"title\": \"Updated Task\",    \n            \"description\": \"Task description\",    \n            \"due_date\": \"2024-03-15T12:00:00Z\",    \n            \"status\": \"pending\"\n            \n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasks/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Mar 2025 06:42:21 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Task updated successfully\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Delete Tasks",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/tasks/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"tasks",
+						"1"
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": [
+				{
+					"name": "Delete Tasks",
+					"originalRequest": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/tasks/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"tasks",
+								"1"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Mon, 24 Mar 2025 06:42:38 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "39"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Task deleted successfully\"\n}"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://postman-rest-api-learner.glitch.me/"
+		}
+	]
+}
